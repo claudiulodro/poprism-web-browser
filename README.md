@@ -1,2 +1,4 @@
 # poprism-web-browser
-The First Web Browser For Roku
+A Web Browser For Roku
+
+Visit https://owner.roku.com/add/internetbrowser to install the channel.
