@@ -1,0 +1,43 @@
+sub main()
+
+	app = newApp()
+	previousPage = app.urlScreen()
+	currentPage = app.browserScreen( previousPage )
+	while currentPage <> ""
+		if currentPage.mid( 0, 2 ) = "//"
+			currentPage = "http:" + currentPage
+		else if currentPage.mid( 0, 4 ) <> "http" 
+			currentPage = previousPage + currentPage
+		end if
+
+		print "GOING TO NEW PAGE: " + currentPage
+		previousPage = currentPage
+		currentPage = app.browserScreen( currentPage )
+	end while
+
+end sub
+
+function getCleanBody( text ) as String
+	bodyRegex = createObject( "roRegex", "<body.*?</body>", "is" )
+	body = bodyRegex.match( text )
+	text = body[0]
+
+	commentsRegex = createObject( "roRegex", "<!--.*?-->", "is" )
+	text = commentsRegex.replaceAll( text, "" )
+
+	scriptsRegex = createObject( "roRegex", "<((script)|(style)).*?</((script)|(style))>", "is" )
+	text = scriptsRegex.replaceAll( text, "" )
+
+	newlineRegex = createObject( "roRegex", "<((div)|(h[1-9])|(tr))[^>]*>", "is" )
+	text = newlineRegex.replaceAll( text, "^" )
+
+	junkTagsRegex = createObject( "roRegex", "<(?!\/?a(?=>|\s.*>))\/?.*?>", "is" )
+	return junkTagsRegex.replaceAll( text, "" )
+
+end function
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+Sub main()
+	app=newApp()
+	while true
+		app.setup()
+		app.draw()
+		finished = app.eventLoop()
+		if finished = true
+			print "DONE"
+			exit while
+		endif
+	end While
+end sub
+
+function newApp() as Object
+	app = createObject( "roAssociativeArray" )
+	app.setup = appSetup
+	app.eventLoop = appEventLoop
+	app.draw = appDraw
+	return app
+end function
+
+function appSetup() as Void
+    	m.screen=CreateObject("roScreen", true)  ' true := use double buffer
+    	if type(m.screen)<>"roScreen" then
+        	print "Unable to create roscreen."
+        	stop   ' stop exits to the debugger
+    	endif
+    
+    	m.screen.SetAlphaEnable(true) 
+    	m.msgport = CreateObject("roMessagePort")
+    	m.screen.SetPort(m.msgport)
+end function
+
+function appEventLoop() as Boolean
+
+	while true
+		msg = m.msgport.getmessage()
+
+        	if msg <> invalid and type(msg)="roUniversalControlEvent"
+			print msg.getInt()
+
+            		if msg.GetInt() = 1
+				'return false
+            		else if msg.GetInt() = 2
+				'return false
+			else if msg.GetInt() = 3
+				'return false
+            		else if msg.GetInt() = 4
+				return true
+			else
+				'return false
+			endif
+        	endif
+	endwhile
+
+end function 
+
+function appDraw() as Void
+	m.compositor=createObject("roCompositor")
+	m.compositor.setDrawTo(m.screen, 0) 'SET BACKGROUND COLOR
+	width = m.screen.getWidth()
+	height = m.screen.getHeight()
+	print "SCREEN WIDTH IS " + width.toStr()
+	print "SCREEN HEIGHT IS " + height.toStr()
+end function
+
