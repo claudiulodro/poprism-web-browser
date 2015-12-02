@@ -1,4 +1,4 @@
 # poprism-web-browser
-A Web Browser For Roku
+The first and only real Web Browser For Roku
 
-Visit https://owner.roku.com/add/internetbrowser to install the channel.
+https://channelstore.roku.com/details/72711/poprism-web-browser
